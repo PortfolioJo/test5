@@ -1,547 +1,567 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>زياد | خبير تسويق رقمي وإدارة حملات</title>
+    <title>أسيل | مصممة جرافيك رقمي - هوية بصرية وتصميم فني</title>
+    <meta name="description" content="أسيل - مصممة جرافيك رقمي متخصصة في الهوية البصرية وتصميم الويب والاتجاه الفني. تصميمات راقية وتجارب رقمية أنيقة.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- تأثيرات الخلفية الديناميكية -->
-    <div class="background-effects">
-        <div class="gradient-bg"></div>
-        <div class="floating-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-            <div class="shape shape-4"></div>
-        </div>
-        <div class="animated-grid"></div>
-        <div class="pulse-dots"></div>
-    </div>
-    
-    <!-- شريط التنقل -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <!-- الشعار -->
-            <a href="#" class="navbar-logo">
-                <i class="fas fa-chart-line gradient-text"></i>
-                <span class="logo-text" data-key="logo">زياد</span>
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#hero" class="nav__logo">
+                <span class="nav__logo-text">أسيل</span>
+                <span class="nav__logo-sub" data-i18n="nav.designer">مصممة جرافيك رقمي</span>
             </a>
             
-            <!-- قائمة التنقل -->
-            <ul class="navbar-menu" id="navbarMenu">
-                <li class="navbar-item">
-                    <a href="#" class="navbar-link active" data-page="home" data-key="navHome">
-                        <i class="fas fa-home"></i>
-                        <span>الرئيسية</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a href="#" class="navbar-link" data-page="about" data-key="navAbout">
-                        <i class="fas fa-user"></i>
-                        <span>عني</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a href="#" class="navbar-link" data-page="services" data-key="navServices">
-                        <i class="fas fa-bullhorn"></i>
-                        <span>خدماتي</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a href="#" class="navbar-link" data-page="campaigns" data-key="navCampaigns">
-                        <i class="fas fa-rocket"></i>
-                        <span>حملاتي</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a href="#" class="navbar-link" data-page="stats" data-key="navStats">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>إحصائيات</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a href="#" class="navbar-link" data-page="contact" data-key="navContact">
-                        <i class="fas fa-envelope"></i>
-                        <span>اتصل بي</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="nav__menu" id="navMenu">
+                <ul class="nav__list">
+                    <li><a href="#hero" class="nav__link active" data-i18n="nav.home">الرئيسية</a></li>
+                    <li><a href="#about" class="nav__link" data-i18n="nav.about">عنّي</a></li>
+                    <li><a href="#projects" class="nav__link" data-i18n="nav.work">أعمالي</a></li>
+                    <li><a href="#services" class="nav__link" data-i18n="nav.services">خدماتي</a></li>
+                    <li><a href="#gallery" class="nav__link" data-i18n="nav.gallery">المعرض</a></li>
+                    <li><a href="#contact" class="nav__link" data-i18n="nav.contact">اتصل بي</a></li>
+                </ul>
+            </div>
             
-            <!-- عناصر الجانب الأيمن -->
-            <div class="navbar-right">
-                <!-- زر اللغة -->
-                <div class="language-switcher">
-                    <button class="language-btn" id="languageBtn">
-                        <span class="language-text" data-key="language">EN</span>
-                        <i class="fas fa-globe"></i>
-                    </button>
-                </div>
-                
-                <!-- زر القائمة للموبايل -->
-                <button class="navbar-toggle" id="navbarToggle">
-                    <i class="fas fa-bars"></i>
+            <div class="nav__actions">
+                <button class="language-toggle" id="languageToggle" aria-label="تبديل اللغة">
+                    <span class="language-toggle__text" data-i18n="lang.ar">AR</span>
+                    <span class="language-toggle__text hidden" data-i18n="lang.en">EN</span>
+                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="تبديل الثيم">
+                    <i class="fas fa-moon theme-toggle__icon"></i>
+                </button>
+                <button class="nav__toggle" id="navToggle" aria-label="فتح القائمة">
+                    <span class="nav__toggle-line"></span>
+                    <span class="nav__toggle-line"></span>
+                    <span class="nav__toggle-line"></span>
                 </button>
             </div>
-        </div>
-    </nav>
-    
-    <!-- الصفحة الرئيسية -->
-    <div class="page active" id="home">
-        <div class="hero">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span data-key="heroBadge">خبير تسويق رقمي</span>
-                </div>
-                <h1 class="hero-title" data-key="heroTitle">
-                    <span class="hero-title-line">أحول أفكارك إلى</span>
-                    <span class="hero-title-line gradient-text">حملات ناجحة</span>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero section--full" id="hero">
+        <div class="hero__bg"></div>
+        
+        <div class="hero__content container">
+            <div class="hero__text fade-in-up">
+                <div class="hero__label" data-i18n="hero.subtitle">فنون رقمية</div>
+                <h1 class="hero__title">
+                    <span class="hero__title-line hero__title-line--1 fade-in-up" style="animation-delay: 0.1s">أسيل</span>
+                    <span class="hero__title-line hero__title-line--2 fade-in-up" style="animation-delay: 0.2s" data-i18n="hero.title">مصممة جرافيك ورقمي</span>
                 </h1>
-                <p class="hero-description" data-key="heroDescription">
-                    أخصص في إدارة الحملات التسويقية الرقمية وتحليل البيانات لتحقيق أعلى عائد على الاستثمار. أجمع بين الإبداع والتحليل لبناء استراتيجيات تسويقية فعالة.
+                
+                <p class="hero__subtitle fade-in-up" style="animation-delay: 0.3s" data-i18n="hero.description">
+                    أصمم هويات بصرية تجمع بين البساطة والجمال المعاصر وسرد القصص العاطفية.
                 </p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="120">0</span>
-                        <span class="stat-label" data-key="statCampaigns">حملة</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="75">0</span>
-                        <span class="stat-label" data-key="statClients">عميل</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="240">0</span>
-                        <span class="stat-label" data-key="statROI">% عائد استثمار</span>
-                    </div>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary" data-page="campaigns">
-                        <i class="fas fa-play-circle"></i> شاهد نجاحاتي
+                
+                <div class="hero__actions fade-in-up" style="animation-delay: 0.4s">
+                    <a href="#projects" class="btn btn--primary btn--large">
+                        <span class="btn__text" data-i18n="hero.viewPortfolio">عرض الأعمال</span>
+                        <i class="btn__icon fas fa-arrow-down"></i>
                     </a>
-                    <a href="#" class="btn btn-secondary" data-page="contact">
-                        <i class="fas fa-comments"></i> ناقش مشروعك
+                    <a href="#contact" class="btn btn--outline btn--large">
+                        <span class="btn__text" data-i18n="hero.startProject">ابدأ مشروع</span>
+                        <i class="btn__icon fas fa-star"></i>
                     </a>
+                    <button class="btn btn--outline btn--large" id="instagramShare">
+                        <span class="btn__text">شارك على إنستقرام</span>
+                        <i class="btn__icon fab fa-instagram"></i>
+                    </button>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="marketing-dashboard">
-                    <div class="dashboard-header">
-                        <div class="metric">
-                            <span class="metric-value">+85%</span>
-                            <span class="metric-label">نمو المبيعات</span>
+        </div>
+        
+        <a href="#about" class="hero__scroll fade-in" style="animation-delay: 0.8s">
+            <span class="hero__scroll-text" data-i18n="hero.explore">استكشف</span>
+            <div class="hero__scroll-line"></div>
+        </a>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section__header fade-in-up">
+                <h2 class="section__title">
+                    <span class="section__title-number">01</span>
+                    <span class="section__title-text" data-i18n="about.title">الفلسفة الإبداعية</span>
+                </h2>
+                <p class="section__subtitle" data-i18n="about.subtitle">حيث يلتقي الفن بالغرض في الشكل الرقمي</p>
+            </div>
+            
+            <div class="about__content">
+                <div class="about__image fade-in-left">
+                    <div class="image-frame image-frame--gold">
+                        <div class="image-frame__inner">
+                            <div class="image-placeholder">
+                                <i class="image-placeholder__icon fas fa-palette"></i>
+                                <span class="image-placeholder__text" data-i18n="about.imageText">راوي قصص بصري</span>
+                            </div>
                         </div>
-                        <div class="metric">
-                            <span class="metric-value">3.2x</span>
-                            <span class="metric-label">معدل التفاعل</span>
+                    </div>
+                </div>
+                
+                <div class="about__text fade-in-right">
+                    <h3 class="about__heading" data-i18n="about.heading">تصميم بقصد</h3>
+                    
+                    <div class="about__description">
+                        <p data-i18n="about.description1">أتخصص في تحويل المفاهيم المجردة إلى تجارب بصرية مؤثرة تلقى صدى لدى الجمهور. يجمع أسلوبي بين الحس الفني والتفكير الاستراتيجي.</p>
+                        
+                        <p data-i18n="about.description2">مع أكثر من 5 سنوات من الخبرة في التصميم الرقمي، تعاونت مع علامات تجارية عالمية لبناء هويات بصرية مميزة وتجارب مستخدم لا تنسى.</p>
+                    </div>
+                    
+                    <div class="about__signature">
+                        <div class="signature">
+                            <span class="signature__name">أسيل</span>
+                            <span class="signature__title" data-i18n="about.designerTitle">مصممة جرافيك رقمي</span>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <div class="chart-bar" style="height: 80%;"></div>
-                        <div class="chart-bar" style="height: 60%;"></div>
-                        <div class="chart-bar" style="height: 90%;"></div>
-                        <div class="chart-bar" style="height: 70%;"></div>
-                        <div class="chart-bar" style="height: 85%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section section--projects" id="projects">
+        <div class="container">
+            <div class="section__header fade-in-up">
+                <h2 class="section__title">
+                    <span class="section__title-number">02</span>
+                    <span class="section__title-text" data-i18n="projects.title">أعمال مميزة</span>
+                </h2>
+                <p class="section__subtitle" data-i18n="projects.subtitle">مشاريع مختارة تعرض التميز في التصميم</p>
+            </div>
+            
+            <div class="projects__grid">
+                <article class="project-card fade-in-up" data-project="1" style="animation-delay: 0.1s">
+                    <div class="project-card__image project-card__image--1">
+                        <div class="project-card__overlay">
+                            <span class="project-card__category" data-i18n="projects.project1.category">الهوية البصرية</span>
+                            <span class="project-card__year">2024</span>
+                        </div>
                     </div>
-                    <div class="dashboard-footer">
-                        <span class="trending-up"><i class="fas fa-arrow-up"></i> 42% هذا الشهر</span>
+                    
+                    <div class="project-card__content">
+                        <h3 class="project-card__title" data-i18n="projects.project1.title">دار أزياء فاخرة</h3>
+                        <p class="project-card__description" data-i18n="projects.project1.description">هوية بصرية كاملة لعلامة أزياء فاخرة تجمع بين التراث والحداثة</p>
+                        
+                        <div class="project-card__tags">
+                            <span class="tag" data-i18n="projects.tags.logo">تصميم الشعار</span>
+                            <span class="tag" data-i18n="projects.tags.identity">الهوية البصرية</span>
+                            <span class="tag" data-i18n="projects.tags.typography">الخطوط</span>
+                        </div>
+                        
+                        <button class="project-card__link project-view-btn" data-project="1">
+                            <span data-i18n="projects.viewCase">عرض دراسة الحالة</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </article>
+                
+                <article class="project-card project-card--featured fade-in-up" data-project="2" style="animation-delay: 0.2s">
+                    <div class="project-card__image project-card__image--2">
+                        <div class="project-card__overlay">
+                            <span class="project-card__category" data-i18n="projects.project2.category">تصميم الويب</span>
+                            <span class="project-card__year">2024</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card__content">
+                        <h3 class="project-card__title" data-i18n="projects.project2.title">معرض فني تفاعلي</h3>
+                        <p class="project-card__description" data-i18n="projects.project2.description">منصة رقمية لمعرض فني مع تجربة مستخدم غامرة</p>
+                        
+                        <div class="project-card__tags">
+                            <span class="tag" data-i18n="projects.tags.uiux">تصميم واجهة المستخدم</span>
+                            <span class="tag" data-i18n="projects.tags.interaction">تفاعلية</span>
+                            <span class="tag" data-i18n="projects.tags.digitalArt">فن رقمي</span>
+                        </div>
+                        
+                        <button class="project-card__link project-view-btn" data-project="2">
+                            <span data-i18n="projects.viewCase">عرض دراسة الحالة</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </article>
+                
+                <article class="project-card fade-in-up" data-project="3" style="animation-delay: 0.3s">
+                    <div class="project-card__image project-card__image--3">
+                        <div class="project-card__overlay">
+                            <span class="project-card__category" data-i18n="projects.project3.category">إعلانات</span>
+                            <span class="project-card__year">2023</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card__content">
+                        <h3 class="project-card__title" data-i18n="projects.project3.title">حملة مشروبات متميزة</h3>
+                        <p class="project-card__description" data-i18n="projects.project3.description">حملة إعلانية شاملة مع تصوير احترافي</p>
+                        
+                        <div class="project-card__tags">
+                            <span class="tag" data-i18n="projects.tags.advertising">إعلان</span>
+                            <span class="tag" data-i18n="projects.tags.photography">تصوير</span>
+                            <span class="tag" data-i18n="projects.tags.marketing">تسويق</span>
+                        </div>
+                        
+                        <button class="project-card__link project-view-btn" data-project="3">
+                            <span data-i18n="projects.viewCase">عرض دراسة الحالة</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section section--services" id="services">
+        <div class="container">
+            <div class="section__header fade-in-up">
+                <h2 class="section__title">
+                    <span class="section__title-number">03</span>
+                    <span class="section__title-text" data-i18n="services.title">خدمات التصميم</span>
+                </h2>
+                <p class="section__subtitle" data-i18n="services.subtitle">تحويل الرؤى إلى واقع بصري</p>
+            </div>
+            
+            <div class="services__grid">
+                <div class="service-card fade-in-up" style="animation-delay: 0.1s">
+                    <div class="service-card__header">
+                        <div class="service-card__icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3 class="service-card__title" data-i18n="services.service1.title">تصميم الويب</h3>
+                    </div>
+                    
+                    <div class="service-card__body">
+                        <p class="service-card__description" data-i18n="services.service1.description">
+                            تصميم مواقع ويب معاصرة تجمع بين الجمالية والوظيفة، مع التركيز على تجربة المستخدم والأداء.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="service-card service-card--highlight fade-in-up" style="animation-delay: 0.2s">
+                    <div class="service-card__header">
+                        <div class="service-card__icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="service-card__title" data-i18n="services.service2.title">الهوية البصرية</h3>
+                    </div>
+                    
+                    <div class="service-card__body">
+                        <p class="service-card__description" data-i18n="services.service2.description">
+                            أنظمة هوية بصرية كاملة تعبر عن قيم العلامة التجارية وتخلق انطباعات لا تنسى.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in-up" style="animation-delay: 0.3s">
+                    <div class="service-card__header">
+                        <div class="service-card__icon">
+                            <i class="fas fa-camera-retro"></i>
+                        </div>
+                        <h3 class="service-card__title" data-i18n="services.service3.title">الفن الرقمي</h3>
+                    </div>
+                    
+                    <div class="service-card__body">
+                        <p class="service-card__description" data-i18n="services.service3.description">
+                            محتوى بصري جذاب لوسائل التواصل الاجتماعي يعزز حضور العلامة التجارية ويواكب الاتجاهات الحديثة.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- لماذا تختارني -->
-        <div class="why-choose">
-            <h2 class="section-title" data-key="whyChooseTitle">لماذا تختارني؟</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section section--gallery" id="gallery">
+        <div class="container">
+            <div class="section__header fade-in-up">
+                <h2 class="section__title">
+                    <span class="section__title-number">04</span>
+                    <span class="section__title-text" data-i18n="gallery.title">المعرض البصري</span>
+                </h2>
+                <p class="section__subtitle" data-i18n="gallery.subtitle">مجموعة مختارة من التعبيرات الفنية</p>
+            </div>
+            
+            <div class="gallery__grid">
+                <div class="gallery-item fade-in-scale" style="animation-delay: 0.1s">
+                    <div class="gallery-item__image gallery-item__image--1">
+                        <div class="gallery-item__overlay">
+                            <span class="gallery-item__title" data-i18n="gallery.item1">تصميم تجريدي</span>
+                        </div>
                     </div>
-                    <h3 data-key="feature1Title">استراتيجيات ذكية</h3>
-                    <p data-key="feature1Desc">أطور استراتيجيات تسويقية مدروسة تعتمد على تحليل البيانات وفهم السوق المستهدف</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+                
+                <div class="gallery-item fade-in-scale" style="animation-delay: 0.15s">
+                    <div class="gallery-item__image gallery-item__image--2">
+                        <div class="gallery-item__overlay">
+                            <span class="gallery-item__title" data-i18n="gallery.item2">طباعة رقمية</span>
+                        </div>
                     </div>
-                    <h3 data-key="feature2Title">نتائج سريعة</h3>
-                    <p data-key="feature2Desc">أضمن تحقيق نتائج ملموسة في وقت قياسي مع تحسين مستمر للأداء</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-pie"></i>
+                
+                <div class="gallery-item fade-in-scale" style="animation-delay: 0.2s">
+                    <div class="gallery-item__image gallery-item__image--3">
+                        <div class="gallery-item__overlay">
+                            <span class="gallery-item__title" data-i18n="gallery.item3">فن الخط العربي</span>
+                        </div>
                     </div>
-                    <h3 data-key="feature3Title">تحليل متقدم</h3>
-                    <p data-key="feature3Desc">أقدم تقارير تحليلية مفصلة تساعدك على فهم أداء حملاتك واتخاذ قرارات مدروسة</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-sync-alt"></i>
+                
+                <div class="gallery-item fade-in-scale" style="animation-delay: 0.25s">
+                    <div class="gallery-item__image gallery-item__image--4">
+                        <div class="gallery-item__overlay">
+                            <span class="gallery-item__title" data-i18n="gallery.item4">تلوين رقمي</span>
+                        </div>
                     </div>
-                    <h3 data-key="feature4Title">تحسين مستمر</h3>
-                    <p data-key="feature4Desc">أتابع أداء الحملات باستمرار وأقوم بتحسينها للحصول على أفضل النتائج</p>
+                </div>
+                
+                <div class="gallery-item fade-in-scale" style="animation-delay: 0.3s">
+                    <div class="gallery-item__image gallery-item__image--5">
+                        <div class="gallery-item__overlay">
+                            <span class="gallery-item__title" data-i18n="gallery.item5">تصميم هندسي</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item fade-in-scale" style="animation-delay: 0.35s">
+                    <div class="gallery-item__image gallery-item__image--6">
+                        <div class="gallery-item__overlay">
+                            <span class="gallery-item__title" data-i18n="gallery.item6">فن سينمائي</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- خدمات سريعة -->
-        <div class="quick-services">
-            <h2 class="section-title" data-key="servicesTitle">خدماتي المتخصصة</h2>
-            <div class="services-grid">
-                <div class="service-card" data-page="services">
-                    <div class="service-icon">
-                        <i class="fas fa-ad"></i>
-                    </div>
-                    <h3 data-key="service1Title">إعلانات مدمجة</h3>
-                    <p data-key="service1Desc">إدارة حملات إعلانية على جميع المنصات الرقمية</p>
-                </div>
-                <div class="service-card" data-page="services">
-                    <div class="service-icon">
-                        <i class="fas fa-hashtag"></i>
-                    </div>
-                    <h3 data-key="service2Title">تسويق وسائل التواصل</h3>
-                    <p data-key="service2Desc">إدارة متكاملة لجميع حسابات وسائل التواصل الاجتماعي</p>
-                </div>
-                <div class="service-card" data-page="services">
-                    <div class="service-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3 data-key="service3Title">تحسين محركات البحث</h3>
-                    <p data-key="service3Desc">تحسين ظهور موقعك في نتائج البحث الأولى</p>
-                </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section section--contact" id="contact">
+        <div class="container">
+            <div class="section__header fade-in-up">
+                <h2 class="section__title">
+                    <span class="section__title-number">05</span>
+                    <span class="section__title-text" data-i18n="contact.title">لنتواصل</span>
+                </h2>
+                <p class="section__subtitle" data-i18n="contact.subtitle">مستعد لتحويل رؤيتك إلى واقع؟</p>
             </div>
-        </div>
-    </div>
-    
-    <!-- صفحة عني -->
-    <div class="page" id="about">
-        <div class="page-header">
-            <h1 class="page-title" data-key="aboutTitle">عني</h1>
-            <p class="page-description" data-key="aboutDescription">خبير تسويق رقمي متخصص في إدارة الحملات وتحليل البيانات لتحقيق أقصى عائد على الاستثمار</p>
-        </div>
-        
-        <div class="about-content">
-            <div class="about-grid">
-                <div class="about-info">
-                    <h2 data-key="aboutMainTitle">شغفي تحويل البيانات إلى قرارات ذكية</h2>
-                    <p data-key="aboutMainDescription">
-                        مع أكثر من 5 سنوات من الخبرة في التسويق الرقمي، ساعدت عشرات العلامات التجارية على تحقيق نمو استثنائي. أؤمن أن التسويق الناجح يبدأ بفهم عميق للبيانات وينتهي بإبداع في التنفيذ.
+            
+            <div class="contact__grid">
+                <div class="contact__info fade-in-left">
+                    <h3 class="contact__heading" data-i18n="contact.heading">تواصل معي</h3>
+                    <p class="contact__description" data-i18n="contact.description">
+                        هل لديك مشروع في ذهنك؟ يسعدني سماع أفكارك. لنتناقش حول كيفية تحويل رؤيتك إلى واقع.
                     </p>
                     
-                    <div class="expertise">
-                        <h3 data-key="expertiseTitle">مجالات تخصصي</h3>
-                        <div class="expertise-grid">
-                            <div class="expertise-item">
-                                <i class="fas fa-filter"></i>
-                                <span>تحليل البيانات</span>
+                    <div class="contact__methods">
+                        <div class="contact-method">
+                            <div class="contact-method__icon">
+                                <i class="fas fa-envelope"></i>
                             </div>
-                            <div class="expertise-item">
-                                <i class="fas fa-bullseye"></i>
-                                <span>تحديد الجمهور المستهدف</span>
+                            <div class="contact-method__content">
+                                <h4 data-i18n="contact.emailTitle">البريد الإلكتروني</h4>
+                                <a href="mailto:hello@aseel.design" class="contact-method__link">hello@aseel.design</a>
                             </div>
-                            <div class="expertise-item">
-                                <i class="fas fa-adjust"></i>
-                                <span>تحسين معدل التحويل</span>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-method__icon">
+                                <i class="fas fa-phone"></i>
                             </div>
-                            <div class="expertise-item">
-                                <i class="fas fa-chart-line"></i>
-                                <span>قياس الأداء</span>
+                            <div class="contact-method__content">
+                                <h4 data-i18n="contact.phoneTitle">الهاتف</h4>
+                                <a href="tel:+966555555555" class="contact-method__link">+966 55 555 5555</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-method__icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-method__content">
+                                <h4 data-i18n="contact.locationTitle">الموقع</h4>
+                                <span class="contact-method__text" data-i18n="contact.location">متاح عالمياً</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <div class="stat-number">98%</div>
-                        <div class="stat-label">رضا العملاء</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">5M+</div>
-                        <div class="stat-label">وصول شهري</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">45%</div>
-                        <div class="stat-label">توفير في الميزانية</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- صفحة الخدمات -->
-    <div class="page" id="services">
-        <div class="page-header">
-            <h1 class="page-title" data-key="servicesMainTitle">خدماتي</h1>
-            <p class="page-description" data-key="servicesMainDescription">حلول تسويقية شاملة تغطي جميع جوانب التسويق الرقمي</p>
-        </div>
-        
-        <div class="services-container">
-            <div class="services-grid-detailed">
-                <div class="service-detail-card">
-                    <div class="service-header">
-                        <div class="service-icon">
-                            <i class="fas fa-ad"></i>
+                
+                <div class="contact__form fade-in-right">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required placeholder=" ">
+                            <label for="name" data-i18n="contact.form.name">اسمك</label>
                         </div>
-                        <h3>إعلانات وسائل التواصل</h3>
-                    </div>
-                    <p>إدارة متكاملة لحملات الإعلانات على فيسبوك، إنستغرام، تيك توك، لينكدإن</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> تصميم استراتيجية إعلانية</li>
-                        <li><i class="fas fa-check"></i> إدارة الميزانية اليومية</li>
-                        <li><i class="fas fa-check"></i> تحسين الحملات باستمرار</li>
-                    </ul>
-                </div>
-                
-                <div class="service-detail-card">
-                    <div class="service-header">
-                        <div class="service-icon">
-                            <i class="fas fa-chart-line"></i>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required placeholder=" ">
+                            <label for="email" data-i18n="contact.form.email">البريد الإلكتروني</label>
                         </div>
-                        <h3>تحليل البيانات</h3>
-                    </div>
-                    <p>تحليل شامل لأداء الحملات وتقديم تقارير مفصلة واقتراحات تحسين</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> تقارير أداء أسبوعية</li>
-                        <li><i class="fas fa-check"></i> تحليل المنافسين</li>
-                        <li><i class="fas fa-check"></i> توصيات عملية للتحسين</li>
-                    </ul>
-                </div>
-                
-                <div class="service-detail-card">
-                    <div class="service-header">
-                        <div class="service-icon">
-                            <i class="fas fa-search"></i>
+                        
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" required placeholder=" "></textarea>
+                            <label for="message" data-i18n="contact.form.message">تفاصيل المشروع</label>
                         </div>
-                        <h3>تحسين محركات البحث</h3>
-                    </div>
-                    <p>تحسين ظهور موقعك في نتائج البحث وزيادة الزيارات العضوية</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> بحث الكلمات المفتاحية</li>
-                        <li><i class="fas fa-check"></i> تحسين المحتوى</li>
-                        <li><i class="fas fa-check"></i> بناء الروابط الخلفية</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- صفحة الحملات -->
-    <div class="page" id="campaigns">
-        <div class="page-header">
-            <h1 class="page-title" data-key="campaignsTitle">حملاتي الناجحة</h1>
-            <p class="page-description" data-key="campaignsDescription">مجموعة من أبرز الحملات التسويقية التي نفذتها مع نتائج ملموسة</p>
-        </div>
-        
-        <div class="campaigns-grid">
-            <div class="campaign-card">
-                <div class="campaign-badge">ناجحة</div>
-                <div class="campaign-image"></div>
-                <div class="campaign-content">
-                    <h3>حملة إطلاق منتج جديد</h3>
-                    <p>حملة متكاملة لإطلاق منتج تقني جديد في السوق المحلي</p>
-                    <div class="campaign-stats">
-                        <span class="stat"><i class="fas fa-eye"></i> 2.5M مشاهدة</span>
-                        <span class="stat"><i class="fas fa-click"></i> 15% معدل نقر</span>
-                    </div>
+                        
+                        <button type="submit" class="btn btn--primary btn--full">
+                            <span class="btn__text" data-i18n="contact.form.submit">إرسال الرسالة</span>
+                            <i class="btn__icon fas fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             
-            <div class="campaign-card">
-                <div class="campaign-badge">متميزة</div>
-                <div class="campaign-image"></div>
-                <div class="campaign-content">
-                    <h3>حملة العلامة التجارية</h3>
-                    <p>بناء هوية قوية لعلامة تجارية ناشئة في مجال الأزياء</p>
-                    <div class="campaign-stats">
-                        <span class="stat"><i class="fas fa-users"></i> +50K متابع</span>
-                        <span class="stat"><i class="fas fa-heart"></i> 85% تفاعل</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="campaign-card">
-                <div class="campaign-badge">رائدة</div>
-                <div class="campaign-image"></div>
-                <div class="campaign-content">
-                    <h3>حملة مبيعات موسمية</h3>
-                    <p>حملة تسويقية لموسم التخفيضات حققت زيادة 300% في المبيعات</p>
-                    <div class="campaign-stats">
-                        <span class="stat"><i class="fas fa-shopping-cart"></i> 1500 طلب</span>
-                        <span class="stat"><i class="fas fa-dollar-sign"></i> 320% عائد</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- صفحة الإحصائيات -->
-    <div class="page" id="stats">
-        <div class="page-header">
-            <h1 class="page-title" data-key="statsTitle">إحصائيات وأداء</h1>
-            <p class="page-description" data-key="statsDescription">أرقام حقيقية تعكس نجاح استراتيجياتي التسويقية</p>
-        </div>
-        
-        <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-large-card">
-                    <div class="stat-large-number">3.5M</div>
-                    <div class="stat-large-label">وصول إجمالي</div>
-                    <div class="stat-trend up">
-                        <i class="fas fa-arrow-up"></i> 25% عن الشهر الماضي
-                    </div>
-                </div>
-                
-                <div class="stat-large-card">
-                    <div class="stat-large-number">42%</div>
-                    <div class="stat-large-label">معدل التفاعل</div>
-                    <div class="stat-trend up">
-                        <i class="fas fa-arrow-up"></i> 18% عن الشهر الماضي
-                    </div>
-                </div>
-                
-                <div class="stat-large-card">
-                    <div class="stat-large-number">1.2M</div>
-                    <div class="stat-large-label">نقر على الإعلانات</div>
-                    <div class="stat-trend up">
-                        <i class="fas fa-arrow-up"></i> 32% عن الشهر الماضي
-                    </div>
-                </div>
-            </div>
-            
-            <div class="performance-chart">
-                <h3>أداء الحملات خلال 6 أشهر</h3>
-                <div class="chart-bars">
-                    <div class="chart-bar-item">
-                        <div class="bar" style="height: 70%;"></div>
-                        <span>يناير</span>
-                    </div>
-                    <div class="chart-bar-item">
-                        <div class="bar" style="height: 80%;"></div>
-                        <span>فبراير</span>
-                    </div>
-                    <div class="chart-bar-item">
-                        <div class="bar" style="height: 65%;"></div>
-                        <span>مارس</span>
-                    </div>
-                    <div class="chart-bar-item">
-                        <div class="bar" style="height: 90%;"></div>
-                        <span>أبريل</span>
-                    </div>
-                    <div class="chart-bar-item">
-                        <div class="bar" style="height: 85%;"></div>
-                        <span>مايو</span>
-                    </div>
-                    <div class="chart-bar-item">
-                        <div class="bar" style="height: 95%;"></div>
-                        <span>يونيو</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- صفحة الاتصال -->
-    <div class="page" id="contact">
-        <div class="page-header">
-            <h1 class="page-title" data-key="contactTitle">لنبدأ مشروعك</h1>
-            <p class="page-description" data-key="contactDescription">أخبرني عن مشروعك وسأعود إليك خلال 24 ساعة بخطة عمل مخصصة</p>
-        </div>
-        
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-content">
-                        <h3>البريد الإلكتروني</h3>
-                        <p>ziad@digitalmarketer.com</p>
-                    </div>
-                </div>
-                
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-content">
-                        <h3>الهاتف</h3>
-                        <p>+966 55 123 4567</p>
-                    </div>
-                </div>
-                
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="contact-content">
-                        <h3>ساعات العمل</h3>
-                        <p>الأحد - الخميس: 9 ص - 6 م</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="contact-form">
-                <form id="contactForm">
-                    <div class="form-group">
-                        <input type="text" placeholder="اسمك" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="بريدك الإلكتروني" required>
-                    </div>
-                    <div class="form-group">
-                        <select required>
-                            <option value="">نوع الخدمة المطلوبة</option>
-                            <option value="ads">إعلانات وسائل التواصل</option>
-                            <option value="seo">تحسين محركات البحث</option>
-                            <option value="strategy">استشارة تسويقية</option>
-                            <option value="campaign">إدارة حملة كاملة</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="أخبرني عن مشروعك وأهدافك..." rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-paper-plane"></i> أرسل طلبك
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-    
-    <!-- التذييل -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fas fa-chart-line"></i>
-                    <span>زياد</span>
-                </div>
-                <p class="footer-text">خبير تسويق رقمي متخصص في إدارة الحملات وتحليل البيانات لتحقيق أقصى عائد على الاستثمار</p>
-                
-                <div class="footer-social">
-                    <a href="#" class="footer-social-link">
-                        <i class="fab fa-twitter"></i>
+            <div class="contact__social fade-in-up">
+                <h4 class="contact__social-title" data-i18n="contact.socialTitle">تابع أعمالي</h4>
+                <div class="social-links">
+                    <a href="https://dribbble.com" class="social-link fade-in-up" target="_blank" aria-label="Dribbble" style="animation-delay: 0.1s">
+                        <i class="fab fa-dribbble"></i>
+                        <span class="social-link__text">Dribbble</span>
                     </a>
-                    <a href="#" class="footer-social-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" class="footer-social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="footer-social-link">
+                    <a href="https://behance.net" class="social-link fade-in-up" target="_blank" aria-label="Behance" style="animation-delay: 0.15s">
                         <i class="fab fa-behance"></i>
+                        <span class="social-link__text">Behance</span>
+                    </a>
+                    <a href="https://linkedin.com" class="social-link fade-in-up" target="_blank" aria-label="LinkedIn" style="animation-delay: 0.2s">
+                        <i class="fab fa-linkedin-in"></i>
+                        <span class="social-link__text">LinkedIn</span>
+                    </a>
+                    <a href="https://instagram.com" class="social-link fade-in-up" target="_blank" aria-label="Instagram" style="animation-delay: 0.25s">
+                        <i class="fab fa-instagram"></i>
+                        <span class="social-link__text">Instagram</span>
                     </a>
                 </div>
-                
-                <p class="copyright">© 2024 زياد. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <p class="footer__copyright">© <span id="currentYear"></span> أسيل. <span data-i18n="footer.rights">جميع الحقوق محفوظة</span>.</p>
             </div>
         </div>
     </footer>
-    
+
+    <!-- Project Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal__overlay"></div>
+        <div class="modal__content">
+            <button class="modal__close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal__header">
+                <span class="modal__category" id="modalCategory">الهوية البصرية</span>
+                <h2 class="modal__title" id="modalTitle">دار أزياء فاخرة</h2>
+                <span class="modal__year" id="modalYear">2024</span>
+            </div>
+            
+            <div class="modal__body">
+                <div class="modal__image" id="modalImage"></div>
+                
+                <div class="modal__info">
+                    <div class="modal__section">
+                        <h3 data-i18n="modal.overview">نظرة عامة على المشروع</h3>
+                        <p id="modalDescription">هوية بصرية كاملة لعلامة أزياء فاخرة تجمع بين التراث والحداثة.</p>
+                    </div>
+                    
+                    <div class="modal__section">
+                        <h3 data-i18n="modal.services">الخدمات المقدمة</h3>
+                        <div class="modal__tags" id="modalTags"></div>
+                    </div>
+                    
+                    <div class="modal__footer">
+                        <a href="#contact" class="btn btn--primary">
+                            <span data-i18n="modal.startProject">ابدأ مشروعاً مماثلاً</span>
+                            <i class="fas fa-star"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instagram Preview Modal -->
+    <div class="modal" id="instagramModal">
+        <div class="modal__overlay"></div>
+        <div class="modal__content" style="max-width: 500px;">
+            <button class="modal__close" id="instagramClose">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal__header">
+                <h2 class="modal__title">مشاركة على إنستقرام</h2>
+            </div>
+            
+            <div class="modal__body">
+                <div class="instagram-preview" id="instagramPreview">
+                    <div class="instagram-preview__header">
+                        <div class="instagram-preview__profile">
+                            <div class="instagram-preview__avatar">أس</div>
+                            <div class="instagram-preview__info">
+                                <strong>aseel.design</strong>
+                                <span>مصممة جرافيك رقمي</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="instagram-preview__image" id="previewImage">
+                        <!-- سيتم إضافة الصورة هنا -->
+                    </div>
+                    <div class="instagram-preview__actions">
+                        <div class="instagram-preview__icons">
+                            <i class="far fa-heart"></i>
+                            <i class="far fa-comment"></i>
+                            <i class="far fa-paper-plane"></i>
+                            <i class="far fa-bookmark"></i>
+                        </div>
+                        <div class="instagram-preview__likes">
+                            <strong>1,234 إعجاب</strong>
+                        </div>
+                        <div class="instagram-preview__caption">
+                            <strong>aseel.design</strong> 🎨✨
+                            <br>
+                            تصفح بورتفوليو أعمالي الكامل!
+                            <br><br>
+                            #تصميم_جرافيك #هوية_بصرية #مصممة_عربية
+                            #تصميم_ويب #فن_رقمي #بورتفوليو
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal__footer" style="flex-direction: column; gap: 1rem;">
+                    <button class="btn btn--primary" id="downloadPreview">
+                        <i class="fas fa-download"></i> تحميل الصورة
+                    </button>
+                    <button class="btn btn--outline" id="copyHashtags">
+                        <i class="fas fa-copy"></i> نسخ الهاشتاقات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
