@@ -1,38 +1,108 @@
 // ===========================================
-// Main Application
+// Main Application - تصميم جديد كامل
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all modules
+    // Initialize all components
+    initLoadingScreen();
     initNavigation();
     initThemeSwitcher();
     initLanguageSwitcher();
-    initAnimations();
     initCurrentYear();
-    initScrollEffects();
-    initHoverEffects();
+    initScrollAnimations();
+    initProjectFilter();
     initProjectModal();
+    initContactForm();
+    initScrollProgress();
+    initFloatingElements();
+    initSmoothScrolling();
+    initPageAnimations();
+    initConfettiEffect();
 });
+
+// ===========================================
+// Loading Screen
+// ===========================================
+
+function initLoadingScreen() {
+    const loadingScreen = document.createElement('div');
+    loadingScreen.className = 'loading-screen';
+    loadingScreen.innerHTML = `
+        <div class="loader">
+            <div class="loader-circle"></div>
+        </div>
+    `;
+    
+    document.body.appendChild(loadingScreen);
+    
+    // Hide loading screen after page loads
+    window.addEventListener('load', function() {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.remove();
+                // Show welcome animation
+                showWelcomeAnimation();
+            }, 500);
+        }, 1000);
+    });
+}
+
+function showWelcomeAnimation() {
+    // Create welcome message
+    const welcomeMsg = document.createElement('div');
+    welcomeMsg.className = 'welcome-message';
+    welcomeMsg.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 50%;
+            right: 50%;
+            transform: translate(50%, -50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 2rem 3rem;
+            border-radius: var(--card-radius);
+            text-align: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease;
+            box-shadow: var(--shadow-xl);
+        ">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">مرحباً بك في عالم الإبداع</h3>
+            <p style="color: var(--text-secondary);">استمتع بتجربة تصميم فريدة</p>
+        </div>
+    `;
+    
+    document.body.appendChild(welcomeMsg);
+    
+    // Remove after 2 seconds
+    setTimeout(() => {
+        welcomeMsg.style.animation = 'fadeIn 0.5s ease reverse';
+        setTimeout(() => welcomeMsg.remove(), 500);
+        
+        // Show confetti
+        triggerConfetti();
+    }, 2000);
+}
 
 // ===========================================
 // Navigation
 // ===========================================
 
 function initNavigation() {
-    const header = document.getElementById('header');
-    const navToggle = document.getElementById('navToggle');
+    const nav = document.getElementById('nav');
     const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav__link');
-    
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+
     // Toggle mobile menu
-    if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-        });
-    }
-    
+    navToggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
     // Close mobile menu when clicking on a link
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
@@ -41,48 +111,45 @@ function initNavigation() {
                 navMenu.classList.remove('active');
                 document.body.style.overflow = '';
             }
-            
-            // Update active link
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
         });
     });
-    
+
     // Header scroll effect
     window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+        const scrolled = window.scrollY > 50;
+        nav.classList.toggle('scrolled', scrolled);
         
         // Update active nav link based on scroll position
-        updateActiveNavLink();
+        updateActiveNavLink(sections, navLinks);
     });
-    
-    // Update active navigation link based on scroll position
-    function updateActiveNavLink() {
-        const sections = document.querySelectorAll('section[id]');
+
+    // Update active nav link function
+    function updateActiveNavLink(sections, links) {
+        let current = '';
         const scrollPos = window.scrollY + 100;
-        
+
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
             const sectionId = section.getAttribute('id');
-            
+
             if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
+                current = sectionId;
+            }
+        });
+
+        links.forEach(link => {
+            link.classList.remove('active');
+            const section = link.getAttribute('data-section');
+            if (section === current || (current === '' && section === 'hero')) {
+                link.classList.add('active');
+                link.style.animation = 'none';
+                setTimeout(() => {
+                    link.style.animation = 'badgePulse 0.3s ease';
+                }, 10);
             }
         });
     }
-    
-    // Initial update
-    updateActiveNavLink();
 }
 
 // ===========================================
@@ -91,27 +158,34 @@ function initNavigation() {
 
 function initThemeSwitcher() {
     const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle.querySelector('.theme-toggle__icon');
+    const themeIcon = themeToggle.querySelector('i');
     
-    // Get saved theme or default to dark
+    // Get saved theme or use default
     const savedTheme = localStorage.getItem('aseel-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
     
-    // Toggle theme
+    // Toggle theme with animation
     themeToggle.addEventListener('click', function() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
-        // Update theme
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('aseel-theme', newTheme);
-        updateThemeIcon(newTheme);
+        // Add flip animation
+        this.style.animation = 'flip 0.6s ease';
         
-        // Add animation
-        this.style.transform = 'rotate(360deg)';
+        // Update theme after animation
         setTimeout(() => {
-            this.style.transform = 'rotate(0deg)';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('aseel-theme', newTheme);
+            updateThemeIcon(newTheme);
+            this.style.animation = '';
+            
+            // Add page transition effect
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                document.body.style.transition = 'opacity 0.3s ease';
+            }, 100);
         }, 300);
     });
     
@@ -131,230 +205,44 @@ function initThemeSwitcher() {
 // ===========================================
 
 function initLanguageSwitcher() {
-    const languageToggle = document.getElementById('languageToggle');
+    const langToggle = document.getElementById('languageToggle');
+    const langText = langToggle.querySelector('.lang-text');
     
-    // Get saved language or default to Arabic
-    const savedLanguage = localStorage.getItem('aseel-language') || 'ar';
-    setLanguage(savedLanguage);
+    // Get saved language or use default
+    const savedLang = localStorage.getItem('aseel-lang') || 'ar';
+    setLanguage(savedLang);
+    updateLangText(savedLang);
     
     // Toggle language
-    languageToggle.addEventListener('click', function() {
-        const currentLanguage = document.documentElement.getAttribute('lang');
-        const newLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+    langToggle.addEventListener('click', function() {
+        const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+        const newLang = currentLang === 'ar' ? 'en' : 'ar';
         
-        setLanguage(newLanguage);
-        localStorage.setItem('aseel-language', newLanguage);
+        this.style.animation = 'flip 0.6s ease';
         
-        // Add animation
-        this.style.transform = 'scale(0.8)';
         setTimeout(() => {
-            this.style.transform = 'scale(1)';
-        }, 200);
+            setLanguage(newLang);
+            updateLangText(newLang);
+            localStorage.setItem('aseel-lang', newLang);
+            this.style.animation = '';
+        }, 300);
     });
     
     function setLanguage(lang) {
-        // Update HTML lang and dir attributes
         document.documentElement.setAttribute('lang', lang);
         document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
         
-        // Show/hide language-specific elements
-        const arElements = document.querySelectorAll('[data-lang="ar"]');
-        const enElements = document.querySelectorAll('[data-lang="en"]');
-        
-        if (lang === 'ar') {
-            arElements.forEach(el => el.style.display = '');
-            enElements.forEach(el => el.style.display = 'none');
-            
-            // Update toggle button text
-            document.querySelectorAll('.language-toggle__text[data-lang="ar"]').forEach(el => {
-                el.textContent = 'EN';
-            });
-            document.querySelectorAll('.language-toggle__text[data-lang="en"]').forEach(el => {
-                el.textContent = 'AR';
-            });
-        } else {
-            arElements.forEach(el => el.style.display = 'none');
-            enElements.forEach(el => el.style.display = '');
-            
-            // Update toggle button text
-            document.querySelectorAll('.language-toggle__text[data-lang="ar"]').forEach(el => {
-                el.textContent = 'AR';
-            });
-            document.querySelectorAll('.language-toggle__text[data-lang="en"]').forEach(el => {
-                el.textContent = 'EN';
-            });
-        }
-        
-        // Update navigation menu position based on direction
-        const navMenu = document.getElementById('navMenu');
-        if (navMenu.classList.contains('active')) {
-            if (lang === 'ar') {
-                navMenu.style.right = '-100%';
-                navMenu.style.left = 'auto';
-            } else {
-                navMenu.style.left = '-100%';
-                navMenu.style.right = 'auto';
-            }
-        }
-        
-        // Refresh animations
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.refresh();
-        }
-    }
-}
-
-// ===========================================
-// Animations
-// ===========================================
-
-function initAnimations() {
-    // Check if GSAP is loaded
-    if (typeof gsap === 'undefined') {
-        console.warn('GSAP not loaded');
-        return;
+        // Add page transition
+        document.body.style.opacity = '0.8';
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.3s ease';
+        }, 100);
     }
     
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Hero animations
-    const heroTimeline = gsap.timeline();
-    
-    heroTimeline
-        .from('.hero__label', {
-            y: 20,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out'
-        })
-        .from('.hero__title-line--1', {
-            y: 60,
-            opacity: 0,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '-=0.8')
-        .from('.hero__title-line--2', {
-            y: 60,
-            opacity: 0,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '-=0.8')
-        .from('.hero__subtitle', {
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out'
-        }, '-=0.6')
-        .from('.hero__actions', {
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out'
-        }, '-=0.4');
-    
-    // Hero scroll line animation
-    gsap.to('.hero__scroll-line', {
-        height: 0,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power2.inOut'
-    });
-    
-    // Floating ornaments
-    gsap.to('.hero__ornament--1', {
-        y: 20,
-        rotation: 5,
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-    });
-    
-    gsap.to('.hero__ornament--2', {
-        y: -20,
-        rotation: -5,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: 0.5
-    });
-    
-    // Fade up animations for sections
-    gsap.utils.toArray('.section').forEach(section => {
-        const title = section.querySelector('.section__title');
-        const subtitle = section.querySelector('.section__subtitle');
-        
-        if (title) {
-            gsap.from(title, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%'
-                },
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power3.out'
-            });
-        }
-        
-        if (subtitle) {
-            gsap.from(subtitle, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%'
-                },
-                y: 30,
-                opacity: 0,
-                duration: 0.6,
-                delay: 0.2,
-                ease: 'power3.out'
-            });
-        }
-    });
-    
-    // Project cards animation
-    const projectCards = document.querySelectorAll('.project-card');
-    gsap.from(projectCards, {
-        scrollTrigger: {
-            trigger: '.projects__grid',
-            start: 'top 80%'
-        },
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out'
-    });
-    
-    // Service cards animation
-    const serviceCards = document.querySelectorAll('.service-card');
-    gsap.from(serviceCards, {
-        scrollTrigger: {
-            trigger: '.services__grid',
-            start: 'top 80%'
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power3.out'
-    });
-    
-    // Gallery items animation
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    gsap.from(galleryItems, {
-        scrollTrigger: {
-            trigger: '.gallery__grid',
-            start: 'top 80%'
-        },
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.08,
-        ease: 'back.out(1.7)'
-    });
+    function updateLangText(lang) {
+        langText.textContent = lang === 'ar' ? 'عربي' : 'English';
+    }
 }
 
 // ===========================================
@@ -369,221 +257,63 @@ function initCurrentYear() {
 }
 
 // ===========================================
-// Scroll Effects
+// Scroll Animations
 // ===========================================
 
-function initScrollEffects() {
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            if (href === '#') return;
-            
-            const targetElement = document.querySelector(href);
-            if (targetElement) {
-                e.preventDefault();
-                
-                // Animate scroll
-                gsap.to(window, {
-                    duration: 1,
-                    scrollTo: {
-                        y: targetElement,
-                        offsetY: 80
-                    },
-                    ease: 'power3.inOut'
-                });
-                
-                // Add click animation
-                gsap.to(this, {
-                    scale: 0.9,
-                    duration: 0.1,
-                    yoyo: true,
-                    repeat: 1,
-                    ease: 'power2.inOut'
-                });
+function initScrollAnimations() {
+    const animatedElements = document.querySelectorAll('.scroll-animate');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
             }
         });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     });
     
-    // Scroll progress indicator
-    const progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress';
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 2px;
-        background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary));
-        z-index: var(--z-tooltip);
-        transition: width 0.1s ease;
-        pointer-events: none;
-    `;
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', function() {
-        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (window.scrollY / windowHeight) * 100;
-        progressBar.style.width = scrolled + '%';
+    animatedElements.forEach(element => {
+        observer.observe(element);
     });
 }
 
 // ===========================================
-// Hover Effects
+// Project Filter
 // ===========================================
 
-function initHoverEffects() {
-    // Project cards hover effect
+function initProjectFilter() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
     
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                y: -8,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
             
-            const link = this.querySelector('.project-card__link');
-            if (link) {
-                const currentLang = document.documentElement.getAttribute('lang');
-                if (currentLang === 'ar') {
-                    gsap.to(link.querySelector('i'), {
-                        x: -5,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Get filter value
+            const filter = this.getAttribute('data-filter');
+            
+            // Filter projects
+            projectCards.forEach(card => {
+                if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
                 } else {
-                    gsap.to(link.querySelector('i'), {
-                        x: 5,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
                 }
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                y: 0,
-                duration: 0.3,
-                ease: 'power2.in'
-            });
-            
-            const link = this.querySelector('.project-card__link');
-            if (link) {
-                gsap.to(link.querySelector('i'), {
-                    x: 0,
-                    duration: 0.3,
-                    ease: 'power2.in'
-                });
-            }
-        });
-    });
-    
-    // Gallery items hover effect
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    
-    galleryItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            gsap.to(this.querySelector('.gallery-item__image'), {
-                scale: 1.1,
-                duration: 0.6,
-                ease: 'power2.out'
-            });
-            
-            gsap.to(this.querySelector('.gallery-item__overlay'), {
-                opacity: 1,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-            
-            gsap.to(this.querySelector('.gallery-item__title'), {
-                y: 0,
-                duration: 0.4,
-                delay: 0.1,
-                ease: 'power2.out'
-            });
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            gsap.to(this.querySelector('.gallery-item__image'), {
-                scale: 1,
-                duration: 0.6,
-                ease: 'power2.in'
-            });
-            
-            gsap.to(this.querySelector('.gallery-item__overlay'), {
-                opacity: 0,
-                duration: 0.3,
-                ease: 'power2.in'
-            });
-            
-            gsap.to(this.querySelector('.gallery-item__title'), {
-                y: 20,
-                duration: 0.3,
-                ease: 'power2.in'
-            });
-        });
-    });
-    
-    // Service cards hover effect
-    const serviceCards = document.querySelectorAll('.service-card');
-    
-    serviceCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                y: -4,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-            
-            const icon = this.querySelector('.service-card__icon');
-            if (icon) {
-                gsap.to(icon, {
-                    rotation: 10,
-                    duration: 0.5,
-                    ease: 'back.out(1.7)'
-                });
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                y: 0,
-                duration: 0.3,
-                ease: 'power2.in'
-            });
-            
-            const icon = this.querySelector('.service-card__icon');
-            if (icon) {
-                gsap.to(icon, {
-                    rotation: 0,
-                    duration: 0.5,
-                    ease: 'back.out(1.7)'
-                });
-            }
-        });
-    });
-    
-    // Social links hover effect
-    const socialLinks = document.querySelectorAll('.social-link');
-    
-    socialLinks.forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            gsap.to(this, {
-                y: -5,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-        
-        link.addEventListener('mouseleave', function() {
-            gsap.to(this, {
-                y: 0,
-                duration: 0.3,
-                ease: 'power2.in'
             });
         });
     });
@@ -596,56 +326,58 @@ function initHoverEffects() {
 function initProjectModal() {
     const modal = document.getElementById('projectModal');
     const modalClose = document.getElementById('modalClose');
-    const projectViewBtns = document.querySelectorAll('.project-view-btn');
+    const viewProjectBtns = document.querySelectorAll('.view-project');
     
     // Project data
     const projects = {
         1: {
-            category: { ar: 'هوية بصرية', en: 'Brand Identity' },
-            title: { ar: 'دار أزياء فاخرة', en: 'Luxury Fashion House' },
-            year: '2024',
-            description: {
-                ar: 'هوية بصرية متكاملة لدار أزياء تهدف إلى الجمع بين التراث والحداثة. تضمن المشروع إنشاء نظام علامة تجارية شامل يعمل عبر نقاط اللمس الرقمية والمادية.',
-                en: 'Complete visual identity for a high-end fashion brand blending heritage with modernity. The project involved creating a comprehensive brand system that works across digital and physical touchpoints.'
-            },
-            tags: {
-                ar: ['تصميم الشعار', 'الهوية البصرية', 'الطباعة', 'دليل العلامة'],
-                en: ['Logo Design', 'Visual Identity', 'Typography', 'Brand Guidelines']
-            },
-            imageClass: 'project-card__image--1'
+            category: 'هوية بصرية',
+            title: 'علامة تجارية فاخرة',
+            description: 'تصميم هوية متكاملة لعلامة أزياء فاخرة مع التركيز على الفخامة والبساطة. العمل تضمن إنشاء نظام هوية كامل يعبر عن قيم العلامة التجارية ويجذب العملاء المستهدفين.',
+            tags: ['تصميم شعار', 'ألوان ماركة', 'مواد دعائية', 'دليل الهوية'],
+            results: [
+                'زيادة الوعي بالعلامة بنسبة 40%',
+                'تحسين تجربة العملاء',
+                'تعزيز الهوية البصرية'
+            ]
         },
         2: {
-            category: { ar: 'تصميم ويب', en: 'Web Design' },
-            title: { ar: 'معرض فني تفاعلي', en: 'Interactive Art Gallery' },
-            year: '2024',
-            description: {
-                ar: 'منصة رقمية لعرض الأعمال الفنية بتجربة مستخدم غامرة. يركز التصميم على إنشاء رحلة سلسة عبر المعارض الافتراضية مع الحفاظ على السلامة الفنية لكل قطعة.',
-                en: 'Digital platform for art exhibition with immersive user experience. The design focuses on creating a seamless journey through virtual exhibitions while maintaining the artistic integrity of each piece.'
-            },
-            tags: {
-                ar: ['تصميم UI/UX', 'التفاعل', 'الفن الرقمي', 'تطوير الويب'],
-                en: ['UI/UX Design', 'Interaction', 'Digital Art', 'Web Development']
-            },
-            imageClass: 'project-card__image--2'
+            category: 'تصميم ويب',
+            title: 'منصة فنية تفاعلية',
+            description: 'واجهة مستخدم حديثة لمنصة فنية مع تجربة تصفح سلسة وجذابة. التصميم يركز على سهولة الاستخدام والتجربة المرئية المميزة.',
+            tags: ['UI/UX', 'تفاعلية', 'تصميم متجاوب', 'تجربة مستخدم'],
+            results: [
+                'زيادة وقت التصفح بنسبة 60%',
+                'تحسين معدل التحويل',
+                'تجربة مستخدم محسنة'
+            ]
         },
         3: {
-            category: { ar: 'إعلان', en: 'Advertising' },
-            title: { ar: 'حملة مشروب فاخر', en: 'Premium Beverage Campaign' },
-            year: '2023',
-            description: {
-                ar: 'حملة إعلانية شاملة مع تصوير احترافي وهوية بصرية متماسكة. نجحت الحملة في ترسيخ العلامة التجارية كخيار نمط حياة فاخر من خلال سرد القصص البصرية الاستراتيجية.',
-                en: 'Comprehensive advertising campaign with professional photography. The campaign successfully positioned the brand as a premium lifestyle choice through strategic visual storytelling.'
-            },
-            tags: {
-                ar: ['الإعلان', 'التصوير', 'التسويق', 'إستراتيجية الحملة'],
-                en: ['Advertising', 'Photography', 'Marketing', 'Campaign Strategy']
-            },
-            imageClass: 'project-card__image--3'
+            category: 'رسم رقمي',
+            title: 'سلسلة فن تجريدي',
+            description: 'مجموعة من الأعمال الفنية الرقمية المستوحاة من الثقافة العربية المعاصرة. كل قطعة تحمل رسالة فنية خاصة وتجمع بين التراث والحداثة.',
+            tags: ['فن رقمي', 'تلوين رقمي', 'فن تجريدي', 'ثقافة عربية'],
+            results: [
+                'معرض فني ناجح',
+                'بيع جميع القطع الفنية',
+                'تغطية إعلامية واسعة'
+            ]
+        },
+        4: {
+            category: 'هوية بصرية',
+            title: 'مقهى ثقافي',
+            description: 'هوية بصرية دافئة لمقهى يجمع بين التراث العربي والحداثة. التصميم يعكس جو المقهى الدافئ والثقافي بطريقة معاصرة.',
+            tags: ['تصميم شعار', 'مواد مطبوعة', 'تصميم داخلي', 'هوية مكان'],
+            results: [
+                'تعزيز هوية المكان',
+                'جذب جمهور متنوع',
+                'نجاح تجاري كبير'
+            ]
         }
     };
     
-    // Open modal when clicking project view button
-    projectViewBtns.forEach(btn => {
+    // Open modal on project click
+    viewProjectBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const projectId = this.getAttribute('data-project');
             openProjectModal(projectId);
@@ -654,9 +386,9 @@ function initProjectModal() {
     
     // Close modal
     modalClose.addEventListener('click', closeModal);
-    modal.querySelector('.modal__overlay').addEventListener('click', closeModal);
+    modal.querySelector('.modal-overlay').addEventListener('click', closeModal);
     
-    // Close modal with Escape key
+    // Close with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             closeModal();
@@ -665,156 +397,383 @@ function initProjectModal() {
     
     function openProjectModal(projectId) {
         const project = projects[projectId];
-        const currentLang = document.documentElement.getAttribute('lang');
-        
         if (!project) return;
         
-        // Update modal content based on current language
-        document.getElementById('modalCategory').textContent = project.category[currentLang];
-        document.getElementById('modalTitle').textContent = project.title[currentLang];
-        document.getElementById('modalYear').textContent = project.year;
-        
-        // Update description
-        if (currentLang === 'ar') {
-            document.getElementById('modalDescription').textContent = project.description.ar;
-            document.getElementById('modalDescription').style.display = '';
-            document.getElementById('modalDescriptionEn').style.display = 'none';
-        } else {
-            document.getElementById('modalDescriptionEn').textContent = project.description.en;
-            document.getElementById('modalDescriptionEn').style.display = '';
-            document.getElementById('modalDescription').style.display = 'none';
-        }
+        // Update modal content
+        document.getElementById('modalCategory').textContent = project.category;
+        document.getElementById('modalTitle').textContent = project.title;
+        document.getElementById('modalDescription').textContent = project.description;
         
         // Update tags
         const tagsContainer = document.getElementById('modalTags');
         tagsContainer.innerHTML = '';
-        const tags = project.tags[currentLang];
-        tags.forEach(tag => {
+        project.tags.forEach(tag => {
             const tagElement = document.createElement('span');
-            tagElement.className = 'tag';
             tagElement.textContent = tag;
-            if (currentLang === 'ar') {
-                tagElement.setAttribute('data-lang', 'ar');
-            } else {
-                tagElement.setAttribute('data-lang', 'en');
-            }
             tagsContainer.appendChild(tagElement);
         });
         
-        // Update image
+        // Update results
+        const resultsContainer = document.getElementById('modalResults');
+        resultsContainer.innerHTML = '';
+        project.results.forEach(result => {
+            const li = document.createElement('li');
+            li.textContent = result;
+            resultsContainer.appendChild(li);
+        });
+        
+        // Update image based on project
         const modalImage = document.getElementById('modalImage');
-        modalImage.className = 'modal__image';
-        modalImage.classList.add(project.imageClass);
+        modalImage.style.background = getProjectGradient(projectId);
         
         // Show modal
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
-        // Animate modal in
-        gsap.fromTo(modal.querySelector('.modal__content'),
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' }
-        );
     }
     
     function closeModal() {
-        // Animate modal out
-        gsap.to(modal.querySelector('.modal__content'), {
-            opacity: 0,
-            y: 20,
-            duration: 0.2,
-            ease: 'power3.in',
-            onComplete: () => {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
+        const modal = document.getElementById('projectModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
     }
-}
-
-// ===========================================
-// Utility Functions
-// ===========================================
-
-// Debounce function for scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Throttle function for resize events
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// Handle window resize
-window.addEventListener('resize', throttle(function() {
-    // Refresh animations on resize
-    if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.refresh();
-    }
-}, 100));
-
-// Handle page visibility change
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.refresh();
-    }
-});
-
-// Handle scroll animations for fade-up elements
-function initScrollAnimations() {
-    const fadeUpElements = document.querySelectorAll('.fade-up');
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+    function getProjectGradient(id) {
+        const gradients = [
+            'linear-gradient(135deg, var(--primary-color), var(--secondary-color))',
+            'linear-gradient(135deg, var(--accent-color), var(--primary-light))',
+            'linear-gradient(135deg, var(--secondary-color), var(--accent-light))',
+            'linear-gradient(135deg, var(--primary-light), var(--secondary-dark))'
+        ];
+        return gradients[id - 1] || gradients[0];
+    }
+}
+
+// ===========================================
+// Contact Form
+// ===========================================
+
+function initContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.querySelector('span').textContent;
+            const originalIcon = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Show success message
+                showNotification('تم إرسال رسالتك بنجاح! سأتواصل معك قريباً.', 'success');
+                
+                // Reset form
+                this.reset();
+                
+                // Reset button
+                submitBtn.innerHTML = originalIcon;
+                submitBtn.querySelector('span').textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Trigger confetti
+                triggerConfetti();
+            }, 1500);
+        });
+    }
+    
+    // Form input animations
+    const formGroups = document.querySelectorAll('.form-group');
+    formGroups.forEach(group => {
+        const input = group.querySelector('input, textarea, select');
+        const label = group.querySelector('label');
+        
+        if (input && label) {
+            input.addEventListener('focus', function() {
+                label.style.top = '-1.5rem';
+                label.style.fontSize = '0.875rem';
+                label.style.color = 'var(--primary-color)';
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    label.style.top = '1rem';
+                    label.style.fontSize = '1rem';
+                    label.style.color = 'var(--text-tertiary)';
+                }
+            });
+        }
+    });
+}
+
+// ===========================================
+// Scroll Progress
+// ===========================================
+
+function initScrollProgress() {
+    // Create progress bar
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 0%;
+        height: 3px;
+        background: var(--gradient-1);
+        z-index: 9998;
+        transition: width 0.1s ease;
+        pointer-events: none;
+    `;
+    document.body.appendChild(progressBar);
+    
+    // Update progress on scroll
+    window.addEventListener('scroll', function() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+}
+
+// ===========================================
+// Floating Elements Animation
+// ===========================================
+
+function initFloatingElements() {
+    const elements = document.querySelectorAll('.floating-element');
+    
+    elements.forEach((element, index) => {
+        // Randomize initial position
+        const randomX = Math.random() * 80 + 10;
+        const randomY = Math.random() * 80 + 10;
+        element.style.right = randomX + '%';
+        element.style.top = randomY + '%';
+        
+        // Add mouse interaction
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.2)';
+            this.style.opacity = '0.2';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.opacity = '0.1';
+        });
+    });
+}
+
+// ===========================================
+// Smooth Scrolling
+// ===========================================
+
+function initSmoothScrolling() {
+    // Add smooth scroll to anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            if (href === '#') return;
+            
+            e.preventDefault();
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const headerHeight = document.querySelector('.glass-nav').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
             }
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+    });
+}
+
+// ===========================================
+// Page Animations
+// ===========================================
+
+function initPageAnimations() {
+    // Add animation to elements on load
+    const animatedElements = [
+        '.hero-title .title-line',
+        '.hero-description',
+        '.hero-actions',
+        '.hero-badge',
+        '.section-header',
+        '.service-card',
+        '.project-card'
+    ];
+    
+    animatedElements.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach((element, index) => {
+            element.style.animationDelay = `${index * 0.1}s`;
+            element.classList.add('scroll-animate');
+        });
     });
     
-    fadeUpElements.forEach(el => observer.observe(el));
+    // Initialize scroll animations
+    initScrollAnimations();
 }
 
-// Initialize scroll animations
-initScrollAnimations();
+// ===========================================
+// Confetti Effect
+// ===========================================
 
-// Handle language change in modal
-document.documentElement.addEventListener('langchange', function() {
-    // This event is triggered when language changes
-    const modal = document.getElementById('projectModal');
-    if (modal.classList.contains('active')) {
-        // Close and reopen modal to update language
-        const activeProject = document.querySelector('.project-view-btn:hover')?.getAttribute('data-project') || '1';
-        closeModal();
-        setTimeout(() => openProjectModal(activeProject), 300);
+function initConfettiEffect() {
+    // Add confetti button to hero section
+    const confettiBtn = document.createElement('button');
+    confettiBtn.className = 'confetti-btn';
+    confettiBtn.innerHTML = '<i class="fas fa-sparkles"></i>';
+    confettiBtn.style.cssText = `
+        position: fixed;
+        bottom: 2rem;
+        left: 2rem;
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-1);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-size: 1.25rem;
+        cursor: pointer;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-normal);
+    `;
+    
+    confettiBtn.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.1) rotate(15deg)';
+    });
+    
+    confettiBtn.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1) rotate(0deg)';
+    });
+    
+    confettiBtn.addEventListener('click', triggerConfetti);
+    
+    document.body.appendChild(confettiBtn);
+}
+
+function triggerConfetti() {
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#8A6B5E', '#7A8B9A', '#D4A574', '#B89B8D']
+        });
     }
-});
+}
 
-// Custom event for language change
-const originalSetLanguage = window.setLanguage;
-window.setLanguage = function(lang) {
-    const event = new CustomEvent('langchange', { detail: { language: lang } });
-    document.documentElement.dispatchEvent(event);
-    return originalSetLanguage ? originalSetLanguage(lang) : null;
-};
+// ===========================================
+// Notification System
+// ===========================================
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    // Add styles
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '100px',
+        right: '20px',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
+        borderRadius: 'var(--element-radius)',
+        padding: '1rem 1.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.75rem',
+        zIndex: '9999',
+        animation: 'slideInRight 0.3s ease',
+        boxShadow: 'var(--shadow-lg)',
+        maxWidth: '400px'
+    });
+    
+    if (type === 'success') {
+        notification.style.borderLeft = '4px solid var(--primary-color)';
+    }
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideInRight 0.3s ease reverse';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// ===========================================
+// Add Custom Animations
+// ===========================================
+
+function addCustomAnimations() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes flip {
+            0% { transform: rotateY(0); }
+            50% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0); }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .notification-success {
+            border-color: rgba(138, 107, 94, 0.3);
+            color: var(--primary-color);
+        }
+        
+        .notification-success i {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .confetti-btn {
+                bottom: 1rem;
+                left: 1rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Initialize custom animations
+addCustomAnimations();
